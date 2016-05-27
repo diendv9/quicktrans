@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.collections.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.web.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.collections.FXCollections?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" style="-fx-border-color: pink;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="diendv9.quicktrans.Controller">
+    <center>
+        <WebView fx:id="webView" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+    </center>
+    <bottom>
+        <ToolBar prefHeight="30.0" prefWidth="800.0" BorderPane.alignment="CENTER">
+            <items>
+                <HBox>
+                    <children>
+                        <Label fx:id="lbLang1" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Lang 1: VI" textFill="#2828f8">
+                            <font>
+                                <Font name="Consolas" size="12.0" />
+                            </font>
+                        </Label>
+                    </children>
+                </HBox>
+                <Separator orientation="VERTICAL" />
+                <HBox>
+                    <children>
+                        <Label fx:id="lbLang2" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Lang 2: EN" textFill="#2828f8">
+                            <font>
+                                <Font name="Consolas" size="12.0" />
+                            </font>
+                        </Label>
+                    </children>
+                </HBox>
+                <Separator orientation="VERTICAL" />
+                <HBox prefHeight="25.0" prefWidth="231.0">
+                    <children>
+                        <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="25.0" prefWidth="64.0" text="Position" textFill="#2828f8">
+                            <font>
+                                <Font name="Consolas" size="12.0" />
+                            </font>
+                        </Label>
+                        <ComboBox fx:id="cbPosition" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" prefHeight="25.0" prefWidth="170.0">
+                            <items>
+                                <FXCollections fx:factory="observableArrayList">
+                                    <String fx:value="Center" />
+                                    <String fx:value="Top-Left" />
+                                    <String fx:value="Top-Right" />
+                                    <String fx:value="Bottom-Right" />
+                                    <String fx:value="Bottom-Left" />
+                                </FXCollections>
+                            </items>
+                            <value>
+                                <String fx:value="Center" />
+                            </value>
+                        </ComboBox>
+                    </children>
+                </HBox>
+                <Separator orientation="VERTICAL" />
+                <HBox prefHeight="25.0" prefWidth="173.0">
+                    <children>
+                        <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="25.0" prefWidth="52.0" text="Opacity" textFill="#2828f8">
+                            <font>
+                                <Font name="Consolas" size="12.0" />
+                            </font>
+                        </Label>
+                        <Slider fx:id="slOpacity" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="25.0" prefWidth="121.0" />
+                    </children>
+                </HBox>
+                <Separator orientation="VERTICAL" />
+                <CheckBox fx:id="chbOnTop" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="On Top" textFill="#2828f8">
+                    <font>
+                        <Font name="Consolas" size="12.0" />
+                    </font>
+                </CheckBox>
+                <Separator orientation="VERTICAL" />
+                <Button fx:id="btClose" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#close" prefHeight="25.0" text="Close" textFill="#1c9e38">
+                    <font>
+                        <Font name="Consolas" size="12.0" />
+                    </font>
+                </Button>
+            <Separator orientation="VERTICAL" />
+                <Button fx:id="btExit" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#exit" prefHeight="25.0" text="Exit" textFill="#b90b25">
+                    <font>
+                        <Font name="Consolas" size="12.0" />
+                    </font>
+                </Button>
+            </items>
+        </ToolBar>
+    </bottom>
+</BorderPane>
