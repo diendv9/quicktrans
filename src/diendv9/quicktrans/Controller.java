@@ -6,7 +6,6 @@
 package diendv9.quicktrans;
 
 import com.melloware.jintellitype.JIntellitype;
-import static diendv9.quicktrans.Main.main;
 import static diendv9.quicktrans.Main.stage;
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
@@ -19,13 +18,17 @@ import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Worker;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Slider;
+import javafx.scene.image.Image;
 import javafx.scene.input.Clipboard;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
+import javafx.stage.Stage;
 
 /**
  *
@@ -46,9 +49,15 @@ public class Controller implements Initializable {
     private CheckBox chbOnTop;
     @FXML
     private Slider slOpacity;
+    Alert alNetError = new Alert(AlertType.ERROR);
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        alNetError.setTitle("QuickTrans");
+        alNetError.setHeaderText(null);
+        alNetError.setContentText("Can't connect to server. Please ensure that your computer is connected to the internet!");
+        Stage stageAlert = (Stage) alNetError.getDialogPane().getScene().getWindow();
+        stageAlert.getIcons().add(new Image(getClass().getResource("icon.png").toString()));
         webEngine = webView.getEngine();
         webEngine.getLoadWorker().stateProperty().addListener((obs, oldValue, newValue) -> {
             if (newValue == Worker.State.SUCCEEDED) {
@@ -60,10 +69,13 @@ public class Controller implements Initializable {
                 webEngine.executeScript("document.getElementById('gt-res-share').parentElement.removeChild(document.getElementById('gt-res-share'));");
                 webEngine.executeScript("document.getElementById('gt-pb-star').parentElement.removeChild(document.getElementById('gt-pb-star'));");
                 stage.show();
+            } else if (newValue == Worker.State.FAILED) {
+                alNetError.showAndWait();
+                exit();
             }
         }); // addListener()
         webEngine.load("https://translate.google.com/#en/vi/Hello%20You!");
-        webView.getEngine().setUserStyleSheetLocation(getClass().getResource("browser-style.css").toString());
+        webEngine.setUserStyleSheetLocation(getClass().getResource("browser-style.css").toString());
         Clipboard clipboard = Clipboard.getSystemClipboard();
         JIntellitype.getInstance().registerHotKey(1, JIntellitype.MOD_CONTROL, (int) 'D');
         JIntellitype.getInstance().addHotKeyListener((int i) -> {
@@ -72,7 +84,6 @@ public class Controller implements Initializable {
                     if (clipboard.hasString()) {
                         try {
                             webEngine.load("https://translate.google.com/#en/vi/" + URLEncoder.encode(clipboard.getString(), "UTF-8"));
-//                            webEngine.executeScript("document.getElementById('source').value = \" " + clipboard.getString() + " \";");
                         } catch (UnsupportedEncodingException ex) {
                             Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
                         }
@@ -105,6 +116,7 @@ public class Controller implements Initializable {
             });
         });
 
+        chbOnTop.setSelected(Setting.getInstance().isAlwaysOnTop());
         chbOnTop.selectedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
             Setting.getInstance().setAlwaysOnTop(newValue);
             Main.stage.setAlwaysOnTop(newValue);
